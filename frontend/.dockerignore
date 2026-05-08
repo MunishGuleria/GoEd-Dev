@@ -1,0 +1,9 @@
+# Ignore build output for development
+node_modules/
+*.log
+
+# Don't ignore build folder - we need it in Docker
+!build/
+
+# Development-only files (not needed in production)
+embed-example.html

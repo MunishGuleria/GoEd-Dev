@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Console - Go Ed AI</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .back-link {
+            color: #a78bfa;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(167, 139, 250, 0.1);
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(167, 139, 250, 0.2);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #c084fc;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: #e2e8f0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 12px;
+            margin-top: 12px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+        }
+
+        .logs-container {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 600px;
+            overflow-y: auto;
+        }
+
+        .logs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logs-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #c084fc;
+        }
+
+        .log-entry {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid transparent;
+            line-height: 1.6;
+        }
+
+        .log-entry.log-info {
+            border-left-color: #3b82f6;
+        }
+
+        .log-entry.log-warn {
+            border-left-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .log-entry.log-error {
+            border-left-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .log-time {
+            color: #64748b;
+            margin-right: 8px;
+        }
+
+        .log-level {
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .log-message {
+            color: #e2e8f0;
+        }
+
+        .log-data {
+            display: block;
+            color: #94a3b8;
+            margin-top: 4px;
+            margin-left: 120px;
+            font-size: 11px;
+        }
+
+        .empty-logs {
+            text-align: center;
+            color: #64748b;
+            padding: 40px;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .status-inactive {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        /* Scrollbar styling */
+        .logs-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .logs-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .logs-container::-webkit-scrollbar-thumb {
+            background: rgba(167, 139, 250, 0.3);
+            border-radius: 4px;
+        }
+
+        .logs-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(167, 139, 250, 0.5);
+        }
+
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛠️ Developer Console</h1>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>📊 Session Information</h2>
+                <div class="info-row">
+                    <span class="info-label">Session ID</span>
+                    <span class="info-value" id="session-id">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Lead ID</span>
+                    <span class="info-value" id="lead-id">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Returning User</span>
+                    <span class="info-value" id="is-returning">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Status</span>
+                    <span class="status-badge status-active" id="session-status">Active</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⚙️ Session Controls</h2>
+                <button class="btn" onclick="copySessionId()">📋 Copy Session ID</button>
+                <button class="btn" onclick="refreshSessionInfo()">🔄 Refresh Info</button>
+                <button class="btn btn-danger" onclick="clearSession()">🗑️ Clear Session</button>
+            </div>
+        </div>
+
+        <div class="logs-container">
+            <div class="logs-header">
+                <h2>📝 Console Logs</h2>
+                <button class="btn" onclick="clearLogs()">Clear Logs</button>
+            </div>
+            <div id="logs-content">
+                <div class="empty-logs">No logs yet. Interact with the chatbot to see logs appear here.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load chatbot scripts -->
+    <script src="env.js"></script>
+    <script src="src/config.js"></script>
+    <script src="src/debug-logger.js"></script>
+    <script src="src/session-manager.js"></script>
+    <script src="src/api-client.js"></script>
+    <script src="src/marked.min.js"></script>
+    <script src="src/ui-manager.js"></script>
+    <script src="src/chatbot-widget.js"></script>
+
+    <script>
+        // Initialize chatbot in background
+        const widgetConfig = {
+            // apiUrl comes from env.js → config.js (injected by CI/CD)
+            primaryColor: '#6366F1',
+            position: 'bottom-right',
+            theme: 'light',
+            sessionExpiryDays: 7,
+            placeholder: 'Ask me anything about courses...',
+            greeting: 'Hi! Welcome to Go Ed AI. How can I assist you with your educational journey today?'
+        };
+
+        ChatbotWidget.init(widgetConfig);
+
+        // Update session info
+        function refreshSessionInfo() {
+            const info = ChatbotWidget.getSessionInfo();
+            if (info) {
+                document.getElementById('session-id').textContent = info.session_id || 'N/A';
+                document.getElementById('lead-id').textContent = info.lead_id || 'Not set';
+                document.getElementById('is-returning').textContent = info.is_returning ? 'Yes' : 'No';
+            }
+        }
+
+        // Copy session ID to clipboard
+        function copySessionId() {
+            const info = ChatbotWidget.getSessionInfo();
+            if (info && info.session_id) {
+                navigator.clipboard.writeText(info.session_id).then(() => {
+                    alert('Session ID copied to clipboard!');
+                }).catch(err => {
+                    alert('Failed to copy: ' + err);
+                });
+            }
+        }
+
+        // Clear session
+        function clearSession() {
+            if (confirm('Are you sure you want to clear the session? This will delete all session data.')) {
+                ChatbotWidget.clearSession();
+                setTimeout(refreshSessionInfo, 500);
+                alert('Session cleared! Refresh the page to start a new session.');
+            }
+        }
+
+        // Clear logs
+        function clearLogs() {
+            window.DebugLogger.clearLogs();
+            updateLogs();
+        }
+
+        // Update logs display
+        function updateLogs() {
+            const logsContent = document.getElementById('logs-content');
+            const logs = window.DebugLogger.getLogs();
+
+            if (logs.length === 0) {
+                logsContent.innerHTML = '<div class="empty-logs">No logs yet. Interact with the chatbot to see logs appear here.</div>';
+            } else {
+                logsContent.innerHTML = window.DebugLogger.getLogsHTML();
+                // Auto-scroll to bottom
+                logsContent.parentElement.scrollTop = logsContent.parentElement.scrollHeight;
+            }
+        }
+
+        // Initial load
+        refreshSessionInfo();
+        updateLogs();
+
+        // Auto-refresh logs every 2 seconds
+        setInterval(updateLogs, 2000);
+
+        // Auto-refresh session info every 5 seconds
+        setInterval(refreshSessionInfo, 5000);
+    </script>
+</body>
+
+</html>

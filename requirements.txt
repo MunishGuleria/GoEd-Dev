@@ -1,0 +1,38 @@
+# Core
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic
+cryptography
+
+# LangChain & AI
+langchain
+langchain-anthropic
+langchain-community
+langchain-core
+langchain-mcp-adapters
+langchain-openai
+langchain-text-splitters
+langgraph
+langgraph-prebuilt
+langsmith
+fastmcp
+
+# Database & Cache
+asyncpg
+redis
+
+# Document Processing
+beautifulsoup4
+docx2txt
+pdfminer.six
+pypdf
+python-pptx
+unstructured
+
+# Utilities
+aiosmtplib
+croniter
+httpx
+python-magic; sys_platform == "linux"
+python-magic-bin; sys_platform == "win32"

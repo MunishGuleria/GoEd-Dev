@@ -1,0 +1,15 @@
+# Core
+python-dotenv==1.2.1
+croniter==6.0.0
+
+# Database & Cache
+redis==7.1.0
+asyncpg==0.31.0
+
+# HTTP Client
+httpx==0.28.1
+
+# LangChain
+langchain==1.2.8
+langchain-core==1.2.8
+langchain-openai==1.1.7

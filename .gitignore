@@ -1,0 +1,11 @@
+__pycache__/
+.env
+.venv/
+mcp_server/azure_token.json
+mcp_server/test.py
+vectordB_workflow/temp_docs
+mcp_server/test_expand.py
+mcp_server/test_expand_result.json
+.vscode
+chatbot/client/.ig_token_created
+chatbot/logs

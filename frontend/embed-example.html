@@ -1,0 +1,73 @@
+<!-- 
+  Example: How to embed the chatbot widget on any website
+  Copy this code to your website's HTML
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website - With Chatbot</title>
+</head>
+
+<body>
+    <!-- Your website content -->
+    <h1>Welcome to My Website</h1>
+    <p>This page has an embedded chatbot widget!</p>
+
+    <!-- 
+        STEP 1: Include widget CSS 
+        Place just before </head> tag
+    -->
+    <link rel="stylesheet" href="https://your-cdn.com/chatbot-widget.css">
+
+    <!-- 
+        STEP 2: Include widget scripts at end of <body>
+        Replace URLs with your CDN/server location
+    -->
+
+    <!-- Runtime Config (can be edited on server after deployment) -->
+    <script src="https://your-cdn.com/env.js"></script>
+
+    <!-- Widget Scripts -->
+    <script src="https://your-cdn.com/config.js"></script>
+    <script src="https://your-cdn.com/debug-logger.js"></script>
+    <script src="https://your-cdn.com/session-manager.js"></script>
+    <script src="https://your-cdn.com/api-client.js"></script>
+    <script src="https://your-cdn.com/ui-manager.js"></script>
+    <script src="https://your-cdn.com/chatbot-widget.js"></script>
+
+    <!-- 
+        STEP 3: Initialize the widget 
+    -->
+    <script>
+        ChatbotWidget.init({
+            apiUrl: 'https://your-api.azurewebsites.net',  // Your FastAPI backend URL
+            primaryColor: '#667eea',                        // Brand color
+            position: 'bottom-right',                       // 'bottom-right' or 'bottom-left'
+            theme: 'light',                                 // 'light' or 'dark'
+            sessionExpiryDays: 30,                          // Session persistence (days)
+            placeholder: 'Type a message...',
+            greeting: 'Hi! How can I help you today?'
+        });
+    </script>
+
+    <!--
+        ALTERNATIVE: Even simpler - Single file approach
+        (After you create a bundled version)
+    -->
+    <!--
+    <link rel="stylesheet" href="https://your-cdn.com/chatbot-widget.min.css">
+    <script src="https://your-cdn.com/chatbot-widget.min.js"></script>
+    <script>
+        window.ChatbotAutoInit = {
+            apiUrl: 'https://your-api.azurewebsites.net',
+            primaryColor: '#667eea'
+        };
+    </script>
+    -->
+</body>
+
+</html>

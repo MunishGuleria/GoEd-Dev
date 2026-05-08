@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Widget Test Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .arrow {
+            font-size: 3rem;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🤖 Go Ed AI Chatbot</h1>
+        <p>Click the chat button in the bottom-right corner to start chatting!</p>
+        <div class="arrow">👇</div>
+
+        <div class="info-box">
+            <h3>📋 Test Checklist:</h3>
+            <ul>
+                <li>Widget toggle button appears</li>
+                <li>Widget opens on click</li>
+                <li>Greeting message shows</li>
+                <li>Can send a message</li>
+                <li>Response streams back</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <script>
+        // Add error listener before loading script
+        window.onerror = function (msg, url, lineNo, columnNo, error) {
+            console.error('Script Error:', msg, url, lineNo);
+            alert('Error loading widget: ' + msg);
+            return false;
+        };
+    </script>
+    <script src="./build/chatbot-widget.min.js"
+        onerror="alert('Failed to load widget script! Check CORS or network.')"></script>
+    <script>
+        try {
+            ChatbotWidget.init({
+                apiUrl: 'http://zox-edu-ai.southindia.cloudapp.azure.com/chatbot'
+            });
+            console.log('✅ Widget initialized!');
+        } catch (e) {
+            console.error('❌ Widget init failed:', e);
+            alert('Widget init failed: ' + e.message);
+        }
+    </script>
+</body>
+
+</html>
